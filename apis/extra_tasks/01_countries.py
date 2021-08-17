@@ -4,7 +4,7 @@ on your home country and the country you're currently in.
 
 In your python program, parse and compare the data of the two responses:
 * Which country has the larger population?
-* How much does the are of the two countries differ?
+* How much does the area of the two countries differ?
 * Print the native name of both countries, as well as their capitals
 
 '''
@@ -26,10 +26,32 @@ response_dict = response_1[0]
 dict_2 = response_2[0]
 
 for key, value in response_dict.items():
+    if key == 'nativeName':
+        print(f'Native Name: {value}')
+    if key == 'capital':
+        print(f'Capital: {value}')
+
+
+for key, value in dict_2.items():
+    if key == 'nativeName':
+        print(f'Native Name: {value}')
+    if key == 'capital':
+        print(f'Capital: {value}')
+
+for key, value in response_dict.items():
     if key == 'population':
-        print(f'population of United States: {value}')
+        print(f'population of United States: {"{:,}".format(value)}')
 # for key, value in response.items():
 #     pprint.pprint(key, value)
 for key, value in dict_2.items():
     if key == 'population':
-        print(f'population of Argentina: {value}')
+        print(f'population of Argentina: {"{:,}".format(value)}')
+
+for key, value in response_dict.items():
+    if key == 'area':
+        print(f'Area of United States: {"{:,}".format(value)}')
+
+for key, value in dict_2.items():
+    if key == 'area':
+        print(f'Area of Argentina: {"{:,}".format(value)}')
+
