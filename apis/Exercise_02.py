@@ -3,19 +3,17 @@ Building on the previous example, create a list of all of the emails of the user
 the list to the console.
 
 '''
-import json
 import requests
 url = 'http://demo.codingnomads.co:8080/tasks_api/users'
+list_of_emails = []
 
-
-response = requests.get(url).text
-response = json.loads(response)
-
-new_list = []
-
-#print(response)
-
-for key, value in response.items():
+response = requests.get(url)
+email = response.json()
+for key, value in email.items():
     if key == 'data':
-        new_list.append(value)
-print(new_list)
+        new_value = value
+        for dict in new_value[0::]:
+            for key, value in dict.items():
+                if key == 'email':
+                    list_of_emails.append(value)
+print(list_of_emails)
