@@ -1,0 +1,17 @@
+commit 9e031ff76f46981858a8ae1d3bf9fd22311edbc5
+Author: csulva <chrissulva1@gmail.com>
+Date:   Wed Aug 11 15:09:49 2021 -0400
+
+    New API labs
+
+commit ad61826563fdd9e4dc097203bca9e0fb3e391dbc
+Author: csulva <chrissulva1@gmail.com>
+Date:   Wed Aug 11 14:40:44 2021 -0400
+
+    adding new labs from API course
+
+commit 1086bec45c56d5277e12fecaf20578164e300401
+Author: csulva <chrissulva1@gmail.com>
+Date:   Tue Aug 10 19:52:54 2021 -0400
+
+    committing API labs
