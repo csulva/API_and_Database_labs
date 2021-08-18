@@ -37,6 +37,16 @@ def new_account_1(x, y, z):
     requests.post(url, json=body)
     print(requests.post(url, json=body).status_code)
 
+def update_task(a, b, c, d):
+    body = {
+        'id': a,
+        'first_name': b,
+        'last_name': c,
+        'email': d,
+    }
+    requests.put(url, json=body)
+    print(requests.put(url, json=body).status_code)
+
 def delete_task(x):
     response = requests.delete(url + f'/{x}')
     print(response.status_code)
@@ -53,6 +63,13 @@ if new_input == '1':
     z = input('What is your email address? ')
     z = z
     new_account_1(x, y, z)
+
+if new_input == '6':
+    a = input('What is your ID number? ')
+    b = input('What is your first name? ')
+    c = input('What is your last name? ')
+    d = input('What is your email address? ')
+    update_task(a, b, c, d)
 
 if new_input == '7':
     x = input('What is your ID number? ')
