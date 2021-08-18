@@ -41,10 +41,10 @@ for x in range(1, 151):
 
 #sort by height
 sorted_heights = sorted(list_of_pokemon, key=lambda k: k['height'])
-print(sorted_heights)
+#print(sorted_heights)
 
 
-data = open('/Users/christophersulva/Desktop/API_project/API_Labs/python_apis_databases/Pokemon_data.csv', 'w')
+data = open('/Users/christophersulva/Desktop/API_project/API_Labs/python_apis_databases/apis/extra_tasks/Pokemon_data.csv', 'w')
 data.write(f'{list_of_pokemon}')
 data.write('\n')
 data.write(f'{sorted_heights}')
