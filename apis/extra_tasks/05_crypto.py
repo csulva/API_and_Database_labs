@@ -31,12 +31,10 @@ ten_min = time.time() + 60 + 10
 
 while time.time() < ten_min:
     #every ten seconds
-    time.sleep(10)
+    time.sleep(30)
     for key, value in response.items():
         if key == 'price':
             saved_BTC_date[str(datetime.datetime.now())] = value
             append = open('/Users/christophersulva/Desktop/API_project/API_Labs/python_apis_databases/apis/extra_tasks/Bitcoin_data.csv', 'w')
             append.write(f'{saved_BTC_date}')
             append.close()
-
-
