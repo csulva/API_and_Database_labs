@@ -41,8 +41,7 @@ user_input = input('''Please select your task:
 4. Update data in a table
 5. Add new column to table
 6. Delete data from a table
-7. Delete a table
-8. Compare data between two tables
+7. Compare data between two tables
 ''')
 
 
@@ -134,20 +133,77 @@ def add_data_to_table():
         first_name = input("What's the first name? ")
         last_name = input("What's the last name? ")
         email = input("What's the email address? ")
-        query = sqlalchemy.insert(users).values(UserId = 100, FirstName=first_name, LastName=last_name, Email=email)
+        query = sqlalchemy.insert(users).values(UserId = 101, FirstName=first_name, LastName=last_name, Email=email)
         result_proxy = connection.execute(query)
         print('Success!')
+        quit()
     elif select_table == 'Images':
         url = input("What's the url of the image you would like to post? ")
-        query = sqlalchemy.insert(images).values(ImageId = 100, ImageURL=url)
+        query = sqlalchemy.insert(images).values(ImageId = 101, ImageURL=url)
         result_proxy = connection.execute(query)
         print('Success!')
+        quit()
+    elif select_table == 'Posts':
+        post_text = input('Please enter the text of your post: ')
+        query = sqlalchemy.insert(posts).values(PostID = 201, UserID = 2, PostText = post_text, ImageID = 301)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Users_Friends':
+        friendship_id = input("What's your App ID? Enter a positive integer: ")
+        mutual_friend = input('Who do you want to be friends with? Enter their App ID: ')
+        query = sqlalchemy.insert(users_friends).values(ID = 201, UserID_1 = friendship_id, UserID_2 = mutual_friend)
+        results_proxy = connection.execute(query)
+        print('Success!')
+        quit()
     while select_table != 'Users' or select_table != 'Images' or select_table != 'Posts' or select_table != 'Users_Friends':  
         print('\nType in the correct table name from the list below.')
         add_data_to_table()
     quit()
 
-    
+# 4
+def update_table_data():
+    print('Tables: ')
+    for tables in list_of_tables:
+        print(tables)
+    select_table = input('Which table would you like to update data for? ')
+    if select_table == 'Users':
+        email_question = input("Let's look you up based on email... what is your email address? ")
+        print("OK, now let's update your user information...")
+        time.sleep(1)
+        first_name = input("What's your first name? ")
+        last_name = input("What's your last name? ")
+        email = input("What's your email address? ")
+        query = sqlalchemy.update(users).values(FirstName=first_name, LastName=last_name, Email=email).where(users.columns.Email == email_question)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Images':
+        new_image = input('Which number image would you like to change? ')
+        url = input("What image would you like to change it to? Enter URL: ")
+        query = sqlalchemy.update(images).values(ImageURL=url).where(images.columns.ImageId == new_image)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Posts':
+        post_number = input("Which number post would you like to edit? ")
+        post_text = input('Please enter the new text of your post: ')
+        query = sqlalchemy.update(posts).values(PostText = post_text).where(posts.columns.ImageID == post_number)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Users_Friends':
+        friendship_id = input("What's your App ID? Enter a positive integer: ")
+        unfriend = input('Who would you like to "unfriend"? Enter their App ID: ')
+        mutual_friend = input('Who would you like to be friends with instead? Enter their App ID: ')
+        query = sqlalchemy.update(users_friends).values(UserID_1 = friendship_id, UserID_2 = mutual_friend).where(users_friends.columns.UserID_1 == friendship_id and users_friends.columns.UserID_2 == unfriend)
+        results_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    while select_table != 'Users' or select_table != 'Images' or select_table != 'Posts' or select_table != 'Users_Friends':  
+        print('\nType in the correct table name from the list below.')
+        add_data_to_table()
+    quit()
 
 # 5
 def add_column():
@@ -167,10 +223,59 @@ def add_column():
         data_type = sqlalchemy.String(int(length))
     elif data_type == 'bool':
         data_type = sqlalchemy.Boolean()
-    new_column = sqlalchemy.Table(selected_table, metadata).update(text(column_name), data_type)
-    results_proxy = connection.execute(new_column)
+    new_column = sqlalchemy.Column(column_name, data_type)
     print(f'Creating new column {column_name} in table {selected_table}')
+    # new_new_column = images.append_column(new_column)
+    query = sqlalchemy.update(selected_table).values(new_column)
+    results_proxy = connection.execute(query)
     metadata.create_all(engine)
+    quit()
+
+# 6
+def delete_data():
+    print('Tables: ')
+    for tables in list_of_tables:
+        print(tables)
+    select_table = input('Which table would you like to delete data from? ')
+    if select_table == 'Users':
+        email_question = input("Let's delete your info based on your email... what is your email address? ")
+        print("OK, now let's delete your user information...")
+        time.sleep(1)
+        query = sqlalchemy.delete(users).where(users.columns.Email == email_question)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Images':
+        new_image = input('Which number would you like to delete? Please enter the image number: ')
+        print("OK, now deleting the image...")
+        query = sqlalchemy.delete(images).where(images.columns.ImageId == new_image)
+        result_proxy = connection.execute(query)
+        time.sleep(1)
+        print('Success!')
+        quit()
+    elif select_table == 'Posts':
+        post_number = input("Which post would you like to delete? Enter the image number: ")
+        query = sqlalchemy.delete(posts).where(posts.columns.ImageID == post_number)
+        print("OK, now deleting the image...")
+        time.sleep(1)
+        result_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    elif select_table == 'Users_Friends':
+        friendship_id = input("What's your App ID? Enter a positive integer: ")
+        unfriend = input('Who would you like to "unfriend"? Enter their App ID: ')
+        query = sqlalchemy.delete(users_friends).where(users_friends.columns.UserID_1 == friendship_id and users_friends.columns.UserID_2 == unfriend)
+        print("OK, now deleting your friendship...")
+        time.sleep(1)
+        results_proxy = connection.execute(query)
+        print('Success!')
+        quit()
+    while select_table != 'Users' or select_table != 'Images' or select_table != 'Posts' or select_table != 'Users_Friends':  
+        print('\nType in the correct table name from the list below.')
+        add_data_to_table()
+    quit()
+
+# 7
 
 
 while user_input:
@@ -180,6 +285,10 @@ while user_input:
         create_table()
     if user_input == '3':
         add_data_to_table()
-
+    if user_input == '4':
+        update_table_data()
     if user_input == '5':
         add_column()
+    if user_input == '6':
+        delete_data()
+    if user_input == '7':
