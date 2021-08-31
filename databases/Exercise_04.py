@@ -17,7 +17,7 @@ import sqlalchemy
 from pprint import pprint
 import time
 
-from sqlalchemy.sql.expression import text
+from sqlalchemy.sql.expression import asc, text
 
 engine = sqlalchemy.create_engine('mysql+pymysql://username:password@localhost/SocialDB')
 connection = engine.connect()
@@ -41,7 +41,7 @@ user_input = input('''Please select your task:
 4. Update data in a table
 5. Add new column to table
 6. Delete data from a table
-7. Compare data between two tables
+7. View users posts
 ''')
 
 
@@ -276,8 +276,16 @@ def delete_data():
     quit()
 
 # 7
+def view_users_posts():
+    join_statement = posts.join(users, posts.columns.UserID == users.columns.UserId)
+    # join = join_statement.join(posts, users.columns.UserId == posts.columns.UserID)
+    query = sqlalchemy.select(users.columns.UserId, users.columns.FirstName, users.columns.LastName, posts.columns.PostText).select_from(join_statement).order_by(sqlalchemy.asc(users.columns.UserId))
+    results_proxy = connection.execute(query)
+    results = results_proxy.fetchall()
+    pprint(results)
+    quit()
 
-
+# Application Rules
 while user_input:
     if user_input == '1':
         show_data()
@@ -292,3 +300,4 @@ while user_input:
     if user_input == '6':
         delete_data()
     if user_input == '7':
+        view_users_posts()
