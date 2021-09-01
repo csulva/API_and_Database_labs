@@ -15,9 +15,8 @@ To prevent this, you should add a check to see if the record already exists befo
 import sqlalchemy
 from pprint import pprint
 import requests
-from sqlalchemy import engine
 
-# #from sqlalchemy.sql.ddl import CreateSchema
+# from sqlalchemy.sql.ddl import CreateSchema
 
 engine = sqlalchemy.create_engine('mysql+pymysql://username:password@localhost/API_Data')
 connection = engine.connect()
@@ -49,12 +48,12 @@ for key, value in email.items():
                     emails.append(value)
                 
 new_table = sqlalchemy.Table(f'User_Data', metadata,
-    sqlalchemy.Column('user_id', sqlalchemy.Integer(), primary_key=True, autoincrement=True),
-    sqlalchemy.Column('first_name', sqlalchemy.String(), nullable=True),
-    sqlalchemy.Column('last_name', sqlalchemy.String(), nullable=True),
-    sqlalchemy.Column('email_address', sqlalchemy.String(), nullable=True)
+    sqlalchemy.Column('user_id', sqlalchemy.Integer(), primary_key=True),
+    sqlalchemy.Column('first_name', sqlalchemy.String(100), nullable=True),
+    sqlalchemy.Column('last_name', sqlalchemy.String(100), nullable=True),
+    sqlalchemy.Column('email_address', sqlalchemy.String(100), nullable=True)
     )
-metadata.create_all(engine)
+#metadata.create_all(engine)
 
 user_data = sqlalchemy.Table('User_Data', metadata, autoload=True, autoload_with=engine)
 
@@ -63,8 +62,8 @@ user_data = sqlalchemy.Table('User_Data', metadata, autoload=True, autoload_with
 
 # OR
 zero = 0
-for x in id_numbers:
-    query = sqlalchemy.insert(User_Data).values(user_id = id_numbers[zero], first_name = first_names[zero], last_name = last_names[zero], email_address = emails[zero])
+for x in range(len(id_numbers)):
+    query = sqlalchemy.insert(user_data).values(user_id = id_numbers[zero], first_name = first_names[zero], last_name = last_names[zero], email_address = emails[zero])
     zero = zero + 1
 
 result_proxy = connection.execute(query)
