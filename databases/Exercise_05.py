@@ -19,7 +19,7 @@ from sqlalchemy import engine
 
 # #from sqlalchemy.sql.ddl import CreateSchema
 
-engine = sqlalchemy.create_engine('mysql+pymysql://root:Varda1889!@localhost/API_Data')
+engine = sqlalchemy.create_engine('mysql+pymysql://username:password@localhost/API_Data')
 connection = engine.connect()
 metadata = sqlalchemy.MetaData()
 
@@ -64,7 +64,7 @@ user_data = sqlalchemy.Table('User_Data', metadata, autoload=True, autoload_with
 # OR
 zero = 0
 for x in id_numbers:
-    query = sqlalchemy.insert(users).values(user_id = id_numbers[zero], first_name = first_names[zero], last_name = last_names[zero], email_address = emails[zero])
+    query = sqlalchemy.insert(User_Data).values(user_id = id_numbers[zero], first_name = first_names[zero], last_name = last_names[zero], email_address = emails[zero])
     zero = zero + 1
 
 result_proxy = connection.execute(query)
