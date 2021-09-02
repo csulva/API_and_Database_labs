@@ -57,13 +57,8 @@ new_table = sqlalchemy.Table(f'User_Data', metadata,
 
 user_data = sqlalchemy.Table('User_Data', metadata, autoload=True, autoload_with=engine)
 
-
-#query = sqlalchemy.insert(users).values(user_id = (x for x in id_numbers), first_name = (y for y in first_names), last_name = (z for z in last_names), email_address = (email for email in emails))
-
-# OR
 zero = 0
-for x in range(len(id_numbers)):
+for x in range(0, len(id_numbers)):
     query = sqlalchemy.insert(user_data).values(user_id = id_numbers[zero], first_name = first_names[zero], last_name = last_names[zero], email_address = emails[zero])
     zero = zero + 1
-
-result_proxy = connection.execute(query)
+    result_proxy = connection.execute(query)

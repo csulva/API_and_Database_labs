@@ -14,6 +14,6 @@ url = 'http://demo.codingnomads.co:8080/tasks_api/users'
 # "email": "404error@gmail.com",
 # }
 
-response = requests.delete(url + "/420")
+response = requests.delete(url + "/411")
 
 print(response.status_code)
